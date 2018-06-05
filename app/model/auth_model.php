@@ -7,7 +7,7 @@ use App\Lib\Response,
 class AuthModel
 {
     private $db;
-    private $table = 'empleado';
+    private $table = 'usuario';
     private $response;
     
     public function __CONSTRUCT($db)
@@ -18,19 +18,19 @@ class AuthModel
     
     public function autenticar($correo, $password) {
         $empleado = $this->db->from($this->table)
-                             ->where('correo', $correo)
+                             ->where('email', $correo)
                              ->where('password', md5($password))
                              ->fetch();
         
         if(is_object($empleado)){
-            $nombre = explode(' ', $empleado->Nombre)[0];
-            
+            $nombre = $empleado->primer_nombre;
+            $apellido =$empleado->primer_apellido;
             $token = Auth::SignIn([
                 'id' => $empleado->id,
-                'Nombre' => $nombre,
-                'NombreCompleto' => $empleado->Nombre,
+                'Nombre' => $empleado->primer_nombre,
+                'NombreCompleto' => $nombre.' '.$apellido,
                 //'Imagen' => $empleado->Imagen, LO DEJAMOS COMENTADO PORQUE HACE GENERAR UN TOKEN DEMASIADO GRANDE
-                'EsAdmin' => (bool)$empleado->EsAdmin
+                'EsAdmin' => (bool)$empleado->idRol
             ]);
             
             $this->response->result = $token;

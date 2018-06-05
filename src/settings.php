@@ -17,7 +17,7 @@ return [
         // Configuración de mi APP
         'app_token_name'   => 'APP-TOKEN',
         'connectionString' => [
-            'dns'  => 'mysql:host=localhost;dbname=cineworld;charset=utf8',
+            'dns'  => 'mysql:host=localhost;dbname=quiniela;charset=utf8',
             'user' => 'root',
             'pass' => ''
         ]
